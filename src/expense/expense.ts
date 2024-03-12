@@ -4,7 +4,7 @@ export interface IExpense {
   id: number;
   category_id: number;
   name: string;
-  value: number;
+  amount: number;
   created_at: string;
 }
 
