@@ -1,7 +1,7 @@
 import { Registry } from "../registry/registry";
 
 export interface ICategory {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -10,7 +10,7 @@ export class Category {
 
   constructor() {}
 
-  Read(id?: number): ICategory[] {
+  Read(id?: string): ICategory[] {
     return this.registry.Read(id ? id : undefined);
   }
 

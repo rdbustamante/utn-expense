@@ -1,5 +1,5 @@
 export interface ID {
-  id: number;
+  id: string;
 }
 
 export class Registry<T extends ID> {
@@ -9,7 +9,7 @@ export class Registry<T extends ID> {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
   }
 
-  Read(id?: number): T[] {
+  Read(id?: string): T[] {
     const storage = localStorage.getItem(this.STORAGE_KEY);
     if (!storage) return [];
     const payload: T[] = JSON.parse(storage);

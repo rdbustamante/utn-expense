@@ -1,8 +1,8 @@
 import { Registry } from "../registry/registry";
 
 export interface IExpense {
-  id: number;
-  category_id: number;
+  id: string;
+  category_id: string;
   name: string;
   amount: number;
   created_at: string;
@@ -13,7 +13,7 @@ export class Expense {
 
   constructor() {}
 
-  Read(id?: number): IExpense[] {
+  Read(id?: string): IExpense[] {
     return this.registry.Read(id ? id : undefined);
   }
 
