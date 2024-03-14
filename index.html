@@ -15,8 +15,17 @@
                 <h1>Registro de Gastos</h1>
             </span>
             <span class="right">
-                <button id="create-expense-trigger">Nuevo gasto</button>
-                <button id="create-category-trigger">Nueva categoria</button>
+                <div id="dropdown-overlay" class="dropdown-overlay"></div>
+                <button id="expense-trigger">Gasto</button>
+                <div id="expense-dropdown" class="dropdown-list">
+                    <span id="create-expense-item">Crear</span>
+                </div>
+                <button id="category-trigger">Categoria</button>
+                <div id="category-dropdown" class="dropdown-list">
+                    <span id="create-category-item">Crear</span>
+                    <span id="update-category-item">Editar</span>
+                    <span id="delete-category-item">Eliminar</span>
+                </div>
             </span>
         </div>
     </div>
