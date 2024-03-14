@@ -13,22 +13,36 @@
         <div class="header-box">
             <span class="left">
                 <h1>Registro de Gastos</h1>
-                <input type="text" placeholder="Buscar..." id="header-search">
             </span>
             <span class="right">
-                <button id="toggle-sidebar">Nuevo</button>
+                <button id="create-expense-trigger">Nuevo gasto</button>
+                <button id="create-category-trigger">Nueva categoria</button>
             </span>
         </div>
     </div>
     <div class="container-body">
         <!-- caja principal -->
-        <div class="container-chart-table">
-            <div class="container-chart-bar">
-                <!-- progress chart -->
-                <div class="chart-box">
-                    <span id="in-bar"></span>
-                    <span id="out-bar"></span>
-                </div>
+        <div class="container-filter-table">
+            <!-- filters -->
+            <div class="filter-box">
+                <span>
+                    <label for="filter-name">Nombre:</label>
+                    <input type="text" id="filter-name" placeholder="Buscar...">
+                </span>
+                <span>
+                    <label for="filter-category">Categoria:</label>
+                    <select id="filter-category" name="filter-category">
+                        <option value="">Seleccionar...</option>
+                    </select>
+                </span>
+                <span>
+                    <label for="filter-from">Desde:</label>
+                    <input type="date" id="filter-from" name="filter-from" placeholder="Seleccionar...">
+                </span>
+                <span>
+                    <label for="filter-from">Hasta:</label>
+                    <input type="date" id="filter-until" name="filter-until" placeholder="Seleccionar...">
+                </span>
             </div>
             <div class="container-table">
                 <!-- table -->
@@ -46,36 +60,60 @@
                 </table>
             </div>
         </div>
-        <div class="container-chart-doughnut">
+        <div class="container-chart-total">
             <!-- doughnut chart -->
             <div class="chart-box">
                 <canvas id="canvas-doughnut"></canvas>
             </div>
+            <div class="total-box">
+                <!-- resumen total de gastos -->
+            </div>
         </div>
     </div>
+    <div class="container-sidebar-overlay" id="container-sidebar-overlay"></div>
     <div class="container-sidebar" id="container-sidebar">
-        <div id="form-category">
-            <form id="add-category" name="add-category">
+        <div id="form-create">
+            <form id="create-category-form" name="create-category-form">
                 <h4>Crear una categoria</h4>
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" placeholder="Ingresar..." required />
-                <button type="submit">Agregar</button>
+                <label for="create-category-name">Nombre:</label>
+                <input type="text" id="create-category-name" name="name" placeholder="Ingresar..." required />
+                <button type="submit">Crear</button>
+            </form>
+            <form id="create-expense-form" name="create-expense-form">
+                <h4>Crear un gasto</h4>
+                <input type="number" id="create-expense-id" name="id" hidden>
+                <label for="create-expense-category-id">Categoria:</label>
+                <select id="create-expense-category-id" name="category_id" required></select>
+                <label for="create-expense-name">Nombre:</label>
+                <input type="text" id="create-expense-name" name="name" placeholder="Ingresar..." required />
+                <label for="create-expense-amount">Monto:</label>
+                <input type="number" id="create-expense-amount" name="amount" placeholder="Ingresar..." required />
+                <label for="create-expense-created-at">Fecha:</label>
+                <input type="date" id="create-expense-created-at" name="created_at" placeholder="Seleccionar..."
+                    required>
+                <button type="submit">Crear</button>
             </form>
         </div>
-        <div id="form-expense">
-            <form id="add-expense" name="add-expense">
-                <h4>Agregar un gasto</h4>
-                <label for="category">Categoria:</label>
-                <select name="category_id" id="select-category" required>
-                    <option value="">Seleccionar...</option>
-                </select>
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" placeholder="Ingresar..." required />
-                <label for="name">Monto:</label>
-                <input type="number" id="amount" name="amount" placeholder="Ingresar..." required />
-                <label for="created_at">Fecha:</label>
-                <input type="date" id="created_at" name="created_at" placeholder="Seleccionar..." required>
-                <button type="submit">Agregar</button>
+        <div id="form-update">
+            <form id="update-category-form" name="update-category-form">
+                <h4>Editar una categoria</h4>
+                <label for="update-category-name">Nombre:</label>
+                <input type="text" id="update-category-name" name="name" placeholder="Ingresar..." required />
+                <button type="submit">Guardar</button>
+            </form>
+            <form id="update-expense-form" name="update-expense-form">
+                <h4>Editar un gasto</h4>
+                <input type="update-expense-id" id="update-expense-id" name="id" hidden>
+                <label for="update-expense-category-id">Categoria:</label>
+                <select id="update-expense-category-id" name="category_id" required></select>
+                <label for="update-expense-name">Nombre:</label>
+                <input type="text" id="update-expense-name" name="name" placeholder="Ingresar..." required />
+                <label for="update-expense-amount">Monto:</label>
+                <input type="number" id="update-expense-amount" name="amount" placeholder="Ingresar..." required />
+                <label for="update-expense-created-at">Fecha:</label>
+                <input type="date" id="update-expense-created-at" name="created_at" placeholder="Seleccionar..."
+                    required>
+                <button type="submit">Guardar</button>
             </form>
         </div>
     </div>
