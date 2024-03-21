@@ -1,6 +1,6 @@
 import { Chart } from "../../../node_modules/chart.js/auto/auto";
-import { Category } from "../../category/category";
-import { Expense } from "../../expense/expense";
+import { Category } from "../../containers/category/category";
+import { Expense } from "../../containers/expense/expense";
 
 export const ChartComponent = () => {
   const canvasDoughnut = document.getElementById(

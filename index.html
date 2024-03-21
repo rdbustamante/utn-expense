@@ -30,9 +30,7 @@
         </div>
     </div>
     <div class="container-body">
-        <!-- caja principal -->
         <div class="container-filter-table">
-            <!-- filters -->
             <div class="filter-box">
                 <span>
                     <label for="filter-name">Nombre:</label>
@@ -40,9 +38,7 @@
                 </span>
                 <span>
                     <label for="filter-category">Categoria:</label>
-                    <select id="filter-category" name="filter-category">
-                        <option value="">Seleccionar...</option>
-                    </select>
+                    <select id="filter-category" name="filter-category"></select>
                 </span>
                 <span>
                     <label for="filter-from">Desde:</label>
@@ -54,7 +50,6 @@
                 </span>
             </div>
             <div class="container-table">
-                <!-- table -->
                 <table id="expenses-table">
                     <thead>
                         <tr>
@@ -70,12 +65,11 @@
             </div>
         </div>
         <div class="container-chart-total">
-            <!-- doughnut chart -->
             <div class="chart-box">
                 <canvas id="canvas-doughnut"></canvas>
             </div>
             <div class="total-box">
-                <!-- resumen total de gastos -->
+                <h2 class="total-expense" id="total-expense"></h2>
             </div>
         </div>
     </div>

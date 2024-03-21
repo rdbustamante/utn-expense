@@ -5,7 +5,7 @@ export interface ID {
 export class Registry<T extends ID> {
   constructor(private readonly STORAGE_KEY: string) {}
 
-  iSet(data: T[]): void {
+  Set(data: T[]): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
   }
 
@@ -23,7 +23,7 @@ export class Registry<T extends ID> {
   Create(data: T): void {
     const payload = this.Read();
     payload.push(data);
-    this.iSet(payload);
+    this.Set(payload);
   }
 
   Update(data: T): void {
@@ -31,13 +31,13 @@ export class Registry<T extends ID> {
     const index = payload.findIndex((e) => e.id === data.id);
     if (index !== -1) {
       payload[index] = data;
-      this.iSet(payload);
+      this.Set(payload);
     }
   }
 
   Delete(data: T): void {
     const payload = this.Read();
     const filteredPayload = payload.filter((e) => e.id !== data.id);
-    this.iSet(filteredPayload);
+    this.Set(filteredPayload);
   }
 }

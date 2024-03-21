@@ -1,10 +1,12 @@
-import { Category } from "../../category/category";
-import { Expense, IExpense } from "../../expense/expense";
+import { Category } from "../../containers/category/category";
+import { Expense, IExpense } from "../../containers/expense/expense";
+import { Filter } from "../../containers/filter/filter";
 import { SidebarComponent } from "../sidebar/sidebar";
 
 export const TableComponent = () => {
   const category = new Category();
   const expense = new Expense();
+  const filter = new Filter();
   const table = document.getElementById("expenses-table") as HTMLTableElement;
   const sidebar = SidebarComponent();
 
@@ -79,9 +81,8 @@ export const TableComponent = () => {
   };
 
   const onTableUpdate = () => {
-    console.log("onTableUpdate");
     iTableClean();
-    expense.Read().forEach((e) => {
+    filter.Read().forEach((e) => {
       iUpdateRow(e);
     });
   };

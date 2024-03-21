@@ -1,7 +1,7 @@
-import { Category, ICategory } from "../../category/category";
-import { Expense, IExpense } from "../../expense/expense";
+import { Category, ICategory } from "../../containers/category/category";
+import { Expense, IExpense } from "../../containers/expense/expense";
 import { generateUniqueId } from "../../helper/helper";
-import { InternalEvent } from "../../internal-event/internal-event";
+import { InternalEvent } from "../../containers/internal-event/internal-event";
 
 export const SidebarComponent = () => {
   const category = new Category();
@@ -149,16 +149,16 @@ export const SidebarComponent = () => {
     }
     category.Read().forEach((c) => {
       const option = document.createElement("option");
-      option.value = c.id.toString();
+      option.value = c.id;
       option.textContent = c.name;
       categoryId.appendChild(option);
     });
     const cate = category.Read().find((c) => c.id === expense.category_id);
     if (cate) {
-      categoryId.value = cate.id.toString();
+      categoryId.value = cate.id;
     }
     const id = document.getElementById("update-expense-id") as HTMLInputElement;
-    id.value = expense.id.toString();
+    id.value = expense.id;
     const name = document.getElementById(
       "update-expense-name"
     ) as HTMLInputElement;

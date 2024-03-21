@@ -1,4 +1,4 @@
-import { Registry } from "../registry/registry";
+import { Registry } from "../../services/registry/registry";
 
 export interface IExpense {
   id: string;
