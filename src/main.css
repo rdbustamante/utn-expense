@@ -251,7 +251,8 @@ select::placeholder {
   height: max-content;
   padding: 1rem;
   border-radius: 0.5rem;
-  background: var(--color-surface-500);
+  color: var(--color-surface-100);
+  background: var(--color-primary-400);
 }
 
 /* Sidebar */

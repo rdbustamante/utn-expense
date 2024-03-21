@@ -1,14 +1,12 @@
 import { Category } from "../../containers/category/category";
-import { Expense, IExpense } from "../../containers/expense/expense";
+import { IExpense } from "../../containers/expense/expense";
 import { Filter } from "../../containers/filter/filter";
-import { SidebarComponent } from "../sidebar/sidebar";
+import { InternalEvent } from "../../containers/internal-event/internal-event";
 
 export const TableComponent = () => {
   const category = new Category();
-  const expense = new Expense();
   const filter = new Filter();
   const table = document.getElementById("expenses-table") as HTMLTableElement;
-  const sidebar = SidebarComponent();
 
   const iTableClean = () => {
     const tbody = table.querySelector("tbody");
@@ -52,7 +50,8 @@ export const TableComponent = () => {
     svgUpdateIcon.setAttribute("fill", "#90EE90");
     svgUpdateIcon.innerHTML = svgUpdateText;
     editButton.onclick = function () {
-      sidebar.onUpdateExpenseForm(exp);
+      const updateExpenseEvent = new InternalEvent("update-expense-event");
+      updateExpenseEvent.Set(exp);
     };
     editButton.appendChild(svgUpdateIcon);
 
@@ -69,8 +68,8 @@ export const TableComponent = () => {
     svgDeleteIcon.setAttribute("fill", "#E86464");
     svgDeleteIcon.innerHTML = svgDeleteText;
     deleteButton.onclick = function () {
-      expense.Delete(exp);
-      onTableUpdate();
+      const deleteExpenseEvent = new InternalEvent("delete-expense-event");
+      deleteExpenseEvent.Set(exp);
     };
     deleteButton.appendChild(svgDeleteIcon);
 
@@ -85,7 +84,10 @@ export const TableComponent = () => {
     filter.Read().forEach((e) => {
       iUpdateRow(e);
     });
+    console.log("onTableUpdate");
   };
+
+  onTableUpdate();
 
   return { onTableUpdate };
 };

@@ -6,7 +6,10 @@ import { InternalEvent } from "../../containers/internal-event/internal-event";
 export const SidebarComponent = () => {
   const category = new Category();
   const expense = new Expense();
-  const updateTableEvent = new InternalEvent("update-table");
+  const updateFilterEvent = new InternalEvent("update-filter-event");
+  const updateChartEvent = new InternalEvent("update-chart-event");
+  const updateTotalEvent = new InternalEvent("update-total-event");
+
   const sidebar = document.getElementById("container-sidebar") as HTMLElement;
   const sidebarOverlay = document.getElementById(
     "container-sidebar-overlay"
@@ -25,6 +28,12 @@ export const SidebarComponent = () => {
   ) as HTMLElement;
 
   //   Shared
+  const iUpdateComponents = () => {
+    updateFilterEvent.Set();
+    updateChartEvent.Set();
+    updateTotalEvent.Set();
+  };
+
   const iOpenSidebar = () => {
     sidebar.classList.add("open");
     sidebarOverlay.classList.add("active");
@@ -60,6 +69,7 @@ export const SidebarComponent = () => {
       id: generateUniqueId(),
       name: String(payload.name),
     });
+    iUpdateComponents();
     iCloseSidebar();
   };
 
@@ -78,6 +88,7 @@ export const SidebarComponent = () => {
       id: String(payload.id),
       name: String(payload.name),
     });
+    iUpdateComponents();
     iCloseSidebar();
   };
 
@@ -102,8 +113,8 @@ export const SidebarComponent = () => {
       amount: Number(payload.amount),
       created_at: payload.created_at.toString(),
     });
+    iUpdateComponents();
     iCloseSidebar();
-    updateTableEvent.Set();
   };
 
   const onCreateExpenseForm = () => {
@@ -136,8 +147,8 @@ export const SidebarComponent = () => {
       amount: Number(payload.amount),
       created_at: String(payload.created_at),
     });
+    iUpdateComponents();
     iCloseSidebar();
-    updateTableEvent.Set();
   };
 
   const onUpdateExpenseForm = (expense: IExpense) => {

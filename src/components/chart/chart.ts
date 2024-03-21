@@ -3,78 +3,90 @@ import { Category } from "../../containers/category/category";
 import { Expense } from "../../containers/expense/expense";
 
 export const ChartComponent = () => {
-  const canvasDoughnut = document.getElementById(
-    "canvas-doughnut"
-  ) as HTMLCanvasElement;
-
   const category = new Category();
-  const categories = category.Read();
   const expense = new Expense();
-  const expenses = expense.Read();
-  const categoriesMap = new Map<string, number[]>();
 
-  const categoriesInUse = new Set<string>();
+  const onChartUpdate = () => {
+    const chartBox = document.getElementById("chart-box") as HTMLDivElement;
+    const categories = category.Read();
+    const expenses = expense.Read();
 
-  for (const ex of expenses) {
-    categoriesInUse.add(ex.category_id);
-  }
-
-  const categoriesNames = [];
-
-  for (const id of categoriesInUse) {
-    const payload = categories.find((c) => c.id === id);
-    if (payload) {
-      categoriesNames.push(payload.name);
+    while (chartBox.firstChild) {
+      chartBox.removeChild(chartBox.firstChild);
     }
-  }
 
-  for (const ex of expenses) {
-    let amounts = categoriesMap.get(ex.category_id) || [];
-    categoriesMap.set(ex.category_id, amounts);
-    amounts.push(ex.amount);
-  }
+    const canvasDoughnut = document.createElement("canvas");
+    canvasDoughnut.setAttribute("id", "canvas-doughnut");
+    chartBox.appendChild(canvasDoughnut);
 
-  const categoriesAmounts = [];
+    const categoriesMap = new Map<string, number[]>();
+    const categoriesInUse = new Set<string>();
 
-  for (const [_, amounts] of categoriesMap) {
-    categoriesAmounts.push(amounts.reduce((sum, amount) => sum + amount, 0));
-  }
+    for (const ex of expenses) {
+      categoriesInUse.add(ex.category_id);
+    }
 
-  if (canvasDoughnut) {
-    new Chart(canvasDoughnut, {
-      type: "doughnut",
-      data: {
-        labels: categoriesNames,
-        datasets: [
-          {
-            label: "Total",
-            data: categoriesAmounts,
-            backgroundColor: [
-              "#87CEEB",
-              "#A9DFBF",
-              "#D6E2F0",
-              "#F0D8DC",
-              "#F2E8C8",
-              "#F7E5D4",
-              "#D8C7ED",
-              "#F7F6F9",
-              "#F3E0F9",
-            ],
-            hoverBackgroundColor: "#ffd572",
-            hoverOffset: 40,
-            borderWidth: 4,
-          },
-        ],
-      },
-      options: {
-        radius: 200,
-        plugins: {
-          tooltip: {
-            backgroundColor: "#121212",
-            displayColors: false,
+    const categoriesNames = [];
+
+    for (const id of categoriesInUse) {
+      const payload = categories.find((c) => c.id === id);
+      if (payload) {
+        categoriesNames.push(payload.name);
+      }
+    }
+
+    for (const ex of expenses) {
+      let amounts = categoriesMap.get(ex.category_id) || [];
+      categoriesMap.set(ex.category_id, amounts);
+      amounts.push(ex.amount);
+    }
+
+    const categoriesAmounts = [];
+
+    for (const [_, amounts] of categoriesMap) {
+      categoriesAmounts.push(amounts.reduce((sum, amount) => sum + amount, 0));
+    }
+
+    if (canvasDoughnut) {
+      new Chart(canvasDoughnut, {
+        type: "doughnut",
+        data: {
+          labels: categoriesNames,
+          datasets: [
+            {
+              label: "Total",
+              data: categoriesAmounts,
+              backgroundColor: [
+                "#87CEEB",
+                "#A9DFBF",
+                "#D6E2F0",
+                "#F0D8DC",
+                "#F2E8C8",
+                "#F7E5D4",
+                "#D8C7ED",
+                "#F7F6F9",
+                "#F3E0F9",
+              ],
+              hoverBackgroundColor: "#ffd572",
+              hoverOffset: 40,
+              borderWidth: 4,
+            },
+          ],
+        },
+        options: {
+          radius: 200,
+          plugins: {
+            tooltip: {
+              backgroundColor: "#121212",
+              displayColors: false,
+            },
           },
         },
-      },
-    });
-  }
+      });
+    }
+  };
+
+  onChartUpdate();
+
+  return { onChartUpdate };
 };
