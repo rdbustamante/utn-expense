@@ -241,6 +241,7 @@ select::placeholder {
 }
 
 .container-chart-total .chart-box {
+  position: relative;
   height: fit-content;
   padding: 1rem;
   border-radius: 0.5rem;

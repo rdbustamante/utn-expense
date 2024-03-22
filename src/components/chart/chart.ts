@@ -78,7 +78,9 @@ export const ChartComponent = (): IChartComponent => {
           ],
         },
         options: {
-          radius: 200,
+          layout: {
+            padding: 30,
+          },
           plugins: {
             tooltip: {
               backgroundColor: "#121212",
@@ -93,6 +95,19 @@ export const ChartComponent = (): IChartComponent => {
             },
           },
         },
+        plugins: [
+          {
+            id: "1",
+            beforeInit: function (chart) {
+              const legend: any = chart.legend;
+              const originalFit = legend.fit;
+              legend.fit = function fit() {
+                originalFit.bind(legend)();
+                this.height += 30;
+              };
+            },
+          },
+        ],
       });
     }
   };

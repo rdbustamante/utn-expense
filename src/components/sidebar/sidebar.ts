@@ -14,6 +14,9 @@ export const SidebarComponent = (): ISidebarComponent => {
   const category = new Category();
   const expense = new Expense();
   const updateFilterEvent = new InternalEvent("update-filter-event");
+  const updateFilterSelectEvent = new InternalEvent(
+    "update-filter-select-event"
+  );
   const updateChartEvent = new InternalEvent("update-chart-event");
   const updateTotalEvent = new InternalEvent("update-total-event");
 
@@ -74,6 +77,7 @@ export const SidebarComponent = (): ISidebarComponent => {
       id: generateUniqueId(),
       name: String(payload.name),
     });
+    updateFilterSelectEvent.Set();
     iUpdateComponents();
     iCloseSidebar();
   };
