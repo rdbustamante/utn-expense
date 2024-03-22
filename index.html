@@ -23,7 +23,6 @@
                 <button id="category-trigger">Categoria</button>
                 <div id="category-dropdown" class="dropdown-list">
                     <span id="create-category-item">Crear</span>
-                    <span id="update-category-item">Editar</span>
                     <span id="delete-category-item">Eliminar</span>
                 </div>
             </span>
@@ -116,6 +115,16 @@
                 <input type="date" id="update-expense-created-at" name="created_at" placeholder="Seleccionar..."
                     required>
                 <button type="submit">Guardar</button>
+            </form>
+        </div>
+        <div id="form-delete">
+            <form id="delete-category-form" name="delete-category-form">
+                <h4>Eliminar una categoria</h4>
+                <label for="delete-category-id">Nombre:</label>
+                <select id="delete-category-id" name="id" required></select>
+                <h5>¿Esta seguro de eliminar la categoria seleccionada?</h5>
+                <p>Se eliminaran todos los gastos asociados.</p>
+                <button type="submit">Eliminar</button>
             </form>
         </div>
     </div>
