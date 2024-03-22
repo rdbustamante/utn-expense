@@ -4,7 +4,7 @@ import { HeaderComponent } from "./components/header/header";
 import { SidebarComponent } from "./components/sidebar/sidebar";
 import { TableComponent } from "./components/table/table";
 import { TotalComponent } from "./components/total/total";
-import { Expense } from "./containers/expense/expense";
+import { Expense, IExpense } from "./containers/expense/expense";
 import { InternalEvent } from "./containers/internal-event/internal-event";
 
 const onInitView = () => {
@@ -41,15 +41,19 @@ const onInitView = () => {
   };
   updateTotalEvent.Get(onUpdateTotal);
 
-  const updateExpenseEvent = new InternalEvent("update-expense-event");
-  const onUpdateExpense = (e: CustomEvent) => {
+  const updateExpenseEvent = new InternalEvent<IExpense>(
+    "update-expense-event"
+  );
+  const onUpdateExpense = (e: CustomEvent<IExpense>) => {
     sidebar.onUpdateExpenseForm(e.detail);
   };
   updateExpenseEvent.Get(onUpdateExpense);
 
-  const deleteExpenseEvent = new InternalEvent("delete-expense-event");
-  const onDeleteExpense = (e: CustomEvent) => {
-    expense.Delete(e.detail);
+  const deleteExpenseEvent = new InternalEvent<IExpense>(
+    "delete-expense-event"
+  );
+  const onDeleteExpense = (e: CustomEvent<IExpense>) => {
+    expense.Delete(e.detail.id);
     filter.onFilterUpdate();
     chart.onChartUpdate();
     total.onTotalUpdate();

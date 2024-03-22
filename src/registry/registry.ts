@@ -35,9 +35,9 @@ export class Registry<T extends ID> {
     }
   }
 
-  Delete(data: T): void {
+  Delete(id: string): void {
     const payload = this.Read();
-    const filteredPayload = payload.filter((e) => e.id !== data.id);
+    const filteredPayload = payload.filter((e) => e.id !== id);
     this.Set(filteredPayload);
   }
 }
