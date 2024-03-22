@@ -1,4 +1,4 @@
-import { Registry } from "../../services/registry/registry";
+import { Registry } from "../../registry/registry";
 import { IExpense } from "../expense/expense";
 
 export class Filter {

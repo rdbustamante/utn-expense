@@ -3,7 +3,12 @@ import { Expense } from "../../containers/expense/expense";
 import { Filter } from "../../containers/filter/filter";
 import { InternalEvent } from "../../containers/internal-event/internal-event";
 
-export const FilterComponent = () => {
+export interface IFilterComponent {
+  onFilterUpdate: () => void;
+  onFilterCategorySelectUpdate: () => void;
+}
+
+export const FilterComponent = (): IFilterComponent => {
   const category = new Category();
   const expense = new Expense();
   const filter = new Filter();
@@ -18,7 +23,7 @@ export const FilterComponent = () => {
     "filter-until"
   ) as HTMLInputElement;
 
-  const iUpdateCategorySelectElement = () => {
+  const onFilterCategorySelectUpdate = (): void => {
     const defaultOption = document.createElement("option");
     defaultOption.value = "-";
     defaultOption.textContent = "Seleccionar...";
@@ -39,7 +44,7 @@ export const FilterComponent = () => {
     });
   };
 
-  const onFilterUpdate = () => {
+  const onFilterUpdate = (): void => {
     const nameFilter: string = filterName.value.toLowerCase();
     const categoryFilter: string = filterCategory.value;
     const fromFilter: string = filterFrom.value;
@@ -78,8 +83,8 @@ export const FilterComponent = () => {
   filterCategory.addEventListener("change", onFilterUpdate);
   filterFrom.addEventListener("change", onFilterUpdate);
   filterUntil.addEventListener("change", onFilterUpdate);
-  iUpdateCategorySelectElement();
+  onFilterCategorySelectUpdate();
   onFilterUpdate();
 
-  return { onFilterUpdate };
+  return { onFilterUpdate, onFilterCategorySelectUpdate };
 };
