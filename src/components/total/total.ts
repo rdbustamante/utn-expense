@@ -1,9 +1,12 @@
 import { Expense } from "../../containers/expense/expense";
+export interface ITotalComponent {
+  onTotalUpdate: () => void;
+}
 
-export const TotalComponent = () => {
+export const TotalComponent = (): ITotalComponent => {
   const expense = new Expense();
 
-  const onTotalUpdate = () => {
+  const onTotalUpdate = (): void => {
     const expenses = expense.Read();
     const totalElement = document.getElementById("total-expense");
     if (totalElement) {
