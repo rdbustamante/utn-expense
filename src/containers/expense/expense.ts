@@ -1,4 +1,4 @@
-import { Registry } from "../../services/registry/registry";
+import { Registry } from "../../registry/registry";
 
 export interface IExpense {
   id: string;
@@ -25,7 +25,7 @@ export class Expense {
     this.registry.Update(data);
   }
 
-  Delete(data: IExpense): void {
-    this.registry.Delete(data);
+  Delete(id: string): void {
+    this.registry.Delete(id);
   }
 }
