@@ -3,12 +3,16 @@ import { IExpense } from "../../containers/expense/expense";
 import { Filter } from "../../containers/filter/filter";
 import { InternalEvent } from "../../containers/internal-event/internal-event";
 
-export const TableComponent = () => {
+export interface ITableComponent {
+  onTableUpdate: () => void;
+}
+
+export const TableComponent = (): ITableComponent => {
   const category = new Category();
   const filter = new Filter();
   const table = document.getElementById("expenses-table") as HTMLTableElement;
 
-  const iTableClean = () => {
+  const iTableClean = (): void => {
     const tbody = table.querySelector("tbody");
     if (tbody) {
       while (tbody.firstChild) {
@@ -17,7 +21,7 @@ export const TableComponent = () => {
     }
   };
 
-  const iUpdateRow = async (exp: IExpense) => {
+  const iUpdateRow = async (exp: IExpense): Promise<void> => {
     const row = document.createElement("tr");
     const tdName = document.createElement("td");
     tdName.textContent = exp.name;
@@ -79,7 +83,7 @@ export const TableComponent = () => {
     if (table) table.querySelector("tbody")?.appendChild(row);
   };
 
-  const onTableUpdate = () => {
+  const onTableUpdate = (): void => {
     iTableClean();
     filter.Read().forEach((e) => {
       iUpdateRow(e);
