@@ -1,4 +1,4 @@
-import { Registry } from "../../services/registry/registry";
+import { Registry } from "../../registry/registry";
 
 export interface ICategory {
   id: string;
@@ -22,7 +22,7 @@ export class Category {
     this.registry.Update(data);
   }
 
-  Delete(data: ICategory): void {
-    this.registry.Delete(data);
+  Delete(id: string): void {
+    this.registry.Delete(id);
   }
 }
