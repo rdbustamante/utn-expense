@@ -1,9 +1,16 @@
-import { Category, ICategory } from "../../containers/category/category";
+import { Category } from "../../containers/category/category";
 import { Expense, IExpense } from "../../containers/expense/expense";
 import { generateUniqueId } from "../../helper/helper";
 import { InternalEvent } from "../../containers/internal-event/internal-event";
 
-export const SidebarComponent = () => {
+export interface ISidebarComponent {
+  onCreateCategoryForm: () => void;
+  onDeleteCategoryForm: () => void;
+  onCreateExpenseForm: () => void;
+  onUpdateExpenseForm: (expense: IExpense) => void;
+}
+
+export const SidebarComponent = (): ISidebarComponent => {
   const category = new Category();
   const expense = new Expense();
   const updateFilterEvent = new InternalEvent("update-filter-event");
@@ -17,8 +24,8 @@ export const SidebarComponent = () => {
   const createCategoryForm = document.getElementById(
     "create-category-form"
   ) as HTMLElement;
-  const updateCategoryForm = document.getElementById(
-    "update-category-form"
+  const deleteCategoryForm = document.getElementById(
+    "delete-category-form"
   ) as HTMLElement;
   const createExpenseForm = document.getElementById(
     "create-expense-form"
@@ -27,29 +34,28 @@ export const SidebarComponent = () => {
     "update-expense-form"
   ) as HTMLElement;
 
-  //   Shared
-  const iUpdateComponents = () => {
+  const iUpdateComponents = (): void => {
     updateFilterEvent.Set();
     updateChartEvent.Set();
     updateTotalEvent.Set();
   };
 
-  const iOpenSidebar = () => {
+  const iOpenSidebar = (): void => {
     sidebar.classList.add("open");
     sidebarOverlay.classList.add("active");
   };
 
-  const iCloseSidebar = () => {
+  const iCloseSidebar = (): void => {
     sidebar.classList.remove("open");
     sidebarOverlay.classList.remove("active");
   };
 
-  const iClickOutside = (e: Event) => {
+  const iClickOutside = (e: Event): void => {
     console.log("iClickOutside");
     if (!sidebar.contains(e.target as Node)) {
       iCloseSidebar();
       createCategoryForm.classList.remove("visible");
-      updateCategoryForm.classList.remove("visible");
+      deleteCategoryForm.classList.remove("visible");
       createExpenseForm.classList.remove("visible");
       updateExpenseForm.classList.remove("visible");
     }
@@ -59,8 +65,7 @@ export const SidebarComponent = () => {
     sidebarOverlay.addEventListener("click", iClickOutside);
   }
 
-  //   Category
-  const iCreateCategoryForm = (e: Event) => {
+  const iCreateCategoryForm = (e: Event): void => {
     console.log("iCreateCategoryForm");
     e.preventDefault();
     const data = new FormData(createCategoryForm as HTMLFormElement);
@@ -73,35 +78,45 @@ export const SidebarComponent = () => {
     iCloseSidebar();
   };
 
-  const onCreateCategoryForm = () => {
+  const onCreateCategoryForm = (): void => {
     iOpenSidebar();
     createCategoryForm.classList.add("visible");
     createCategoryForm.addEventListener("submit", iCreateCategoryForm);
   };
 
-  const iUpdateCategoryForm = (e: Event) => {
-    console.log("iUpdateCategoryForm");
+  const iDeleteCategoryForm = (e: Event): void => {
+    console.log("iDeleteCategoryForm");
     e.preventDefault();
-    const data = new FormData(createCategoryForm as HTMLFormElement);
+    const data = new FormData(deleteCategoryForm as HTMLFormElement);
     const payload = Object.fromEntries(data);
-    category.Create({
-      id: String(payload.id),
-      name: String(payload.name),
-    });
+    const associatedExpenses = expense
+      .Read()
+      .filter((e) => e.category_id === payload.id);
+    associatedExpenses.forEach((e) => expense.Delete(e.id));
+    category.Delete(String(payload.id));
     iUpdateComponents();
     iCloseSidebar();
   };
 
-  const onUpdateCategoryForm = (category: ICategory) => {
-    const name = document.getElementById("name") as HTMLInputElement;
-    name.value = category.name;
+  const onDeleteCategoryForm = (): void => {
+    const categoryId = document.getElementById(
+      "delete-category-id"
+    ) as HTMLSelectElement;
+    while (categoryId.firstChild) {
+      categoryId.removeChild(categoryId.firstChild);
+    }
+    category.Read().forEach((c) => {
+      const option = document.createElement("option");
+      option.value = c.id;
+      option.textContent = c.name;
+      categoryId.appendChild(option);
+    });
     iOpenSidebar();
-    updateCategoryForm.classList.add("visible");
-    updateCategoryForm.addEventListener("submit", iUpdateCategoryForm);
+    deleteCategoryForm.classList.add("visible");
+    deleteCategoryForm.addEventListener("submit", iDeleteCategoryForm);
   };
 
-  //   Expense
-  const iCreateExpenseForm = (e: Event) => {
+  const iCreateExpenseForm = (e: Event): void => {
     console.log("iCreateExpenseForm");
     e.preventDefault();
     const data = new FormData(createExpenseForm as HTMLFormElement);
@@ -117,7 +132,7 @@ export const SidebarComponent = () => {
     iCloseSidebar();
   };
 
-  const onCreateExpenseForm = () => {
+  const onCreateExpenseForm = (): void => {
     const categoryId = document.getElementById(
       "create-expense-category-id"
     ) as HTMLSelectElement;
@@ -135,7 +150,7 @@ export const SidebarComponent = () => {
     createExpenseForm.addEventListener("submit", iCreateExpenseForm);
   };
 
-  const iUpdateExpenseForm = (e: Event) => {
+  const iUpdateExpenseForm = (e: Event): void => {
     console.log("iUpdateExpenseForm");
     e.preventDefault();
     const data = new FormData(updateExpenseForm as HTMLFormElement);
@@ -151,7 +166,7 @@ export const SidebarComponent = () => {
     iCloseSidebar();
   };
 
-  const onUpdateExpenseForm = (expense: IExpense) => {
+  const onUpdateExpenseForm = (expense: IExpense): void => {
     const categoryId = document.getElementById(
       "update-expense-category-id"
     ) as HTMLSelectElement;
@@ -189,7 +204,7 @@ export const SidebarComponent = () => {
 
   return {
     onCreateCategoryForm,
-    onUpdateCategoryForm,
+    onDeleteCategoryForm,
     onCreateExpenseForm,
     onUpdateExpenseForm,
   };
