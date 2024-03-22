@@ -248,6 +248,10 @@ select::placeholder {
   background: var(--color-surface-200);
 }
 
+.container-chart-total .chart-text-box p {
+  font-size: 14px;
+}
+
 .container-chart-total .total-box {
   height: max-content;
   padding: 1rem;
@@ -324,6 +328,7 @@ select::placeholder {
 
 .container-sidebar form p {
   margin-bottom: 1rem;
+  color: #e86464;
 }
 
 .container-sidebar form button {
