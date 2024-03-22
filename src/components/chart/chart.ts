@@ -2,11 +2,15 @@ import { Chart } from "../../../node_modules/chart.js/auto/auto";
 import { Category } from "../../containers/category/category";
 import { Expense } from "../../containers/expense/expense";
 
-export const ChartComponent = () => {
+export interface IChartComponent {
+  onChartUpdate: () => void;
+}
+
+export const ChartComponent = (): IChartComponent => {
   const category = new Category();
   const expense = new Expense();
 
-  const onChartUpdate = () => {
+  const onChartUpdate = (): void => {
     const chartBox = document.getElementById("chart-box") as HTMLDivElement;
     const categories = category.Read();
     const expenses = expense.Read();
