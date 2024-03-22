@@ -80,6 +80,13 @@ export const ChartComponent = () => {
               backgroundColor: "#121212",
               displayColors: false,
             },
+            legend: {
+              labels: {
+                color: "#d0d0d0",
+                boxWidth: 15,
+                boxHeight: 15,
+              },
+            },
           },
         },
       });

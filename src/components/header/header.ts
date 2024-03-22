@@ -62,18 +62,11 @@ export const HeaderComponent = () => {
       sidebar.onCreateCategoryForm();
       onCategoryDropdownRemove();
     };
-    const updateItem = document.getElementById(
-      "update-category-item"
-    ) as HTMLElement;
-    updateItem.onclick = () => {
-      sidebar.onCreateCategoryForm();
-      onCategoryDropdownRemove();
-    };
     const deleteItem = document.getElementById(
       "delete-category-item"
     ) as HTMLElement;
     deleteItem.onclick = () => {
-      sidebar.onCreateCategoryForm();
+      sidebar.onDeleteCategoryForm();
       onCategoryDropdownRemove();
     };
   };
